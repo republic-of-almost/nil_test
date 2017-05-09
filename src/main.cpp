@@ -49,9 +49,138 @@ main()
   {
     ground.set_name("Ground");
     
+        const float positions[]
+      {
+      -0.5f, -0.5f,  0.5f,
+      0.5f, -0.5f,  0.5f,
+      0.5f,  0.5f,  0.5f,
+      0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f,  0.5f,
+      -0.5f, -0.5f,  0.5f,
+      -0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f, -0.5f,
+      -0.5f, -0.5f, -0.5f,
+      -0.5f, -0.5f, -0.5f,
+      -0.5f, -0.5f,  0.5f,
+      -0.5f,  0.5f,  0.5f,
+      0.5f,  0.5f,  0.5f,
+      0.5f,  0.5f, -0.5f,
+      0.5f, -0.5f, -0.5f,
+      0.5f, -0.5f, -0.5f,
+      0.5f, -0.5f,  0.5f,
+      0.5f,  0.5f,  0.5f,
+      -0.5f, -0.5f, -0.5f,
+      0.5f, -0.5f, -0.5f,
+      0.5f, -0.5f,  0.5f,
+      0.5f, -0.5f,  0.5f,
+      -0.5f, -0.5f,  0.5f,
+      -0.5f, -0.5f, -0.5f,
+      -0.5f,  0.5f, -0.5f,
+      0.5f,  0.5f, -0.5f,
+      0.5f,  0.5f,  0.5f,
+      0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f, -0.5f,
+      };
+
+      const float normals[] {
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+      };
+
+
+      const float texture_coords[] {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+      };
+    
+    
     Nil::Data::Material mat{};
     
     Nil::Data::set(ground, mat);
+    
+    Nil::Data::Mesh_resource mesh{};
+    
+    mesh.position_vec3 = (float*)malloc(sizeof(positions));
+    memcpy(mesh.position_vec3, positions, sizeof(positions));
+    
+    mesh.normal_vec3 = (float*)malloc(sizeof(normals));
+    memcpy(mesh.normal_vec3, normals, sizeof(normals));
+    
+    mesh.texture_coords_vec2 = (float*)malloc(sizeof(texture_coords));
+    memcpy(mesh.texture_coords_vec2, texture_coords, sizeof(texture_coords));
+    
+    mesh.count = 36;
+    
+    Nil::Data::set(ground, mesh);
   }
   
   Nil::Node camera;
@@ -69,6 +198,18 @@ main()
     cam.clear_depth_buffer = true;
     
     Nil::Data::set(camera, cam);
+  }
+  
+  Nil::Node mesh_load;
+  {
+    mesh_load.set_name("Mesh to load");
+    
+    Nil::Data::Resource resource{};
+    
+    resource.type = Nil::Data::Resource_type::MESH;
+    resource.data = 0;
+    
+    Nil::Data::set(mesh_load, resource);
   }
   
   
