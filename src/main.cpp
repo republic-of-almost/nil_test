@@ -2,6 +2,8 @@
 #include <nil/node.hpp>
 #include <nil/data/data.hpp>
 
+#include <assets/cube_mesh.hpp>
+
 #include <external/GL/gl3w.h>
 
 #define SDL_ASPECT_IMPL
@@ -13,9 +15,6 @@
 #define RENDERER_ASPECT_IMPL
 #include <renderer_aspect.hpp>
 
-
-#define ROV_GL_IMPL
-#include <external/rov/rov.hpp>
 
 #include <assert.h>
 
@@ -49,138 +48,32 @@ main()
   {
     ground.set_name("Ground");
     
-        const float positions[]
-      {
-      -0.5f, -0.5f,  0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      -0.5f, -0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f, -0.5f,
-      -0.5f, -0.5f, -0.5f,
-      -0.5f, -0.5f, -0.5f,
-      -0.5f, -0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      -0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f, -0.5f,  0.5f,
-      -0.5f, -0.5f,  0.5f,
-      -0.5f, -0.5f, -0.5f,
-      -0.5f,  0.5f, -0.5f,
-      0.5f,  0.5f, -0.5f,
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f, -0.5f,
-      };
-
-      const float normals[] {
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-      };
-
-
-      const float texture_coords[] {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-      };
-    
-    
     Nil::Data::Material mat{};
-    
     Nil::Data::set(ground, mat);
     
     Nil::Data::Mesh_resource mesh{};
     
-    mesh.position_vec3 = (float*)malloc(sizeof(positions));
-    memcpy(mesh.position_vec3, positions, sizeof(positions));
+    mesh.position_vec3 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_positions));
+    memcpy(mesh.position_vec3, Nil_ext::Mesh::cube_positions, sizeof(Nil_ext::Mesh::cube_positions));
     
-    mesh.normal_vec3 = (float*)malloc(sizeof(normals));
-    memcpy(mesh.normal_vec3, normals, sizeof(normals));
+    mesh.normal_vec3 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_normals));
+    memcpy(mesh.normal_vec3, Nil_ext::Mesh::cube_normals, sizeof(Nil_ext::Mesh::cube_normals));
     
-    mesh.texture_coords_vec2 = (float*)malloc(sizeof(texture_coords));
-    memcpy(mesh.texture_coords_vec2, texture_coords, sizeof(texture_coords));
+    mesh.texture_coords_vec2 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_texture_coords));
+    memcpy(mesh.texture_coords_vec2, Nil_ext::Mesh::cube_texture_coords, sizeof(Nil_ext::Mesh::cube_texture_coords));
     
     mesh.count = 36;
     
     Nil::Data::set(ground, mesh);
+    
+    Nil::Data::Transform trans{};
+    constexpr float zero[] = {0,0,0,0};
+    memcpy(trans.position, zero, sizeof(trans.position));
+    
+    constexpr float one[] = {1,1,1,1};
+    memcpy(trans.scale, one, sizeof(trans.scale));
+    
+    Nil::Data::set(ground, trans);
   }
   
   Nil::Node camera;
@@ -198,18 +91,6 @@ main()
     cam.clear_depth_buffer = true;
     
     Nil::Data::set(camera, cam);
-  }
-  
-  Nil::Node mesh_load;
-  {
-    mesh_load.set_name("Mesh to load");
-    
-    Nil::Data::Resource resource{};
-    
-    resource.type = Nil::Data::Resource_type::MESH;
-    resource.data = 0;
-    
-    Nil::Data::set(mesh_load, resource);
   }
   
   
