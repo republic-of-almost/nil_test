@@ -23,14 +23,41 @@ main()
 {
   Nil::Engine nil_engine;
   
-  Nil_ext::SDL_Aspect sdl_aspect;
-  nil_engine.add_aspect(&sdl_aspect);
+  Nil_ext::SDL_Aspect::Data sdl;
+  {
+    Nil::Aspect sdl_aspect;
+    sdl_aspect.start_up_fn    = Nil_ext::SDL_Aspect::start_up;
+    sdl_aspect.events_fn      = Nil_ext::SDL_Aspect::events;
+    sdl_aspect.early_think_fn = Nil_ext::SDL_Aspect::early_think;
+    sdl_aspect.late_think_fn  = Nil_ext::SDL_Aspect::late_think;
+    sdl_aspect.user_data      = (uintptr_t)&sdl;
+    
+    nil_engine.add_aspect(sdl_aspect);
+  }
   
-  Nil_ext::ImGUI_Aspect imgui_aspect;
-  nil_engine.add_aspect(&imgui_aspect);
+  Nil_ext::ImGui_Aspect::Data imgui;
+  {
+    Nil::Aspect imgui_aspect;
   
-  Nil_ext::GL_Aspect gl_aspect;
-  nil_engine.add_aspect(&gl_aspect);
+    imgui_aspect.start_up_fn = Nil_ext::ImGui_Aspect::start_up;
+    imgui_aspect.think_fn    = Nil_ext::ImGui_Aspect::think;
+    imgui_aspect.user_data   = (uintptr_t)&imgui;
+    
+    nil_engine.add_aspect(imgui_aspect);
+  }
+  
+  Nil_ext::ROV_Aspect::Data rov{};
+  {
+    Nil::Aspect rov_aspect;
+    
+    rov_aspect.start_up_fn    = Nil_ext::ROV_Aspect::start_up;
+    rov_aspect.events_fn      = Nil_ext::ROV_Aspect::events;
+    rov_aspect.early_think_fn = Nil_ext::ROV_Aspect::early_think;
+    rov_aspect.think_fn       = Nil_ext::ROV_Aspect::think;
+    rov_aspect.user_data      = (uintptr_t)&rov;
+    
+    nil_engine.add_aspect(rov_aspect);
+  }
   
   Nil::Node context;
   {
@@ -40,6 +67,8 @@ main()
     window.width = 0;
     window.height = 0;
     window.fullscreen = false;
+    const char title[] = "Nil Test";
+    memcpy(window.title, title, sizeof(title));
     
     Nil::Data::set(context, window);
   }
