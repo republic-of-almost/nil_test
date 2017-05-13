@@ -6,6 +6,9 @@
 
 #include <external/GL/gl3w.h>
 
+#define IMGUI_DEVELOPER_SUPPORT
+#define IMGIZMO_DEVELOPER_SUPPORT
+
 #define SDL_ASPECT_IMPL
 #include <sdl_aspect.hpp>
 
@@ -40,13 +43,14 @@ main()
     Nil::Aspect imgui_aspect;
   
     imgui_aspect.start_up_fn = Nil_ext::ImGui_Aspect::start_up;
+    imgui_aspect.events_fn   = Nil_ext::ImGui_Aspect::events;
     imgui_aspect.think_fn    = Nil_ext::ImGui_Aspect::think;
     imgui_aspect.user_data   = (uintptr_t)&imgui;
     
     nil_engine.add_aspect(imgui_aspect);
   }
   
-  Nil_ext::ROV_Aspect::Data rov{};
+  Nil_ext::ROV_Aspect::Data rov;
   {
     Nil::Aspect rov_aspect;
     
