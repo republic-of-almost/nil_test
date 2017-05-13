@@ -67,69 +67,90 @@ main()
   {
     context.set_name("Ctx");
     
-    Nil::Data::Window window{};
-    window.width = 0;
-    window.height = 0;
-    window.fullscreen = false;
-    const char title[] = "Nil Test";
-    memcpy(window.title, title, sizeof(title));
-    
-    Nil::Data::set(context, window);
+    // Window
+    {
+      Nil::Data::Window window{};
+      window.width = 0;
+      window.height = 0;
+      window.fullscreen = false;
+      const char title[] = "Nil Test";
+      memcpy(window.title, title, sizeof(title));
+      Nil::Data::set(context, window);
+    }
   }
   
   Nil::Node ground;
   {
     ground.set_name("Ground");
     
-    Nil::Data::Material mat{};
-    Nil::Data::set(ground, mat);
+    // Material
+    {
+      Nil::Data::Material mat{};
+      Nil::Data::set(ground, mat);
+    }
     
-    Nil::Data::Mesh_resource mesh{};
+    // Mesh Resource
+    {
+      Nil::Data::Mesh_resource mesh{};
+      
+      mesh.position_vec3 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_positions));
+      memcpy(mesh.position_vec3, Nil_ext::Mesh::cube_positions, sizeof(Nil_ext::Mesh::cube_positions));
+      
+      mesh.normal_vec3 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_normals));
+      memcpy(mesh.normal_vec3, Nil_ext::Mesh::cube_normals, sizeof(Nil_ext::Mesh::cube_normals));
+      
+      mesh.texture_coords_vec2 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_texture_coords));
+      memcpy(mesh.texture_coords_vec2, Nil_ext::Mesh::cube_texture_coords, sizeof(Nil_ext::Mesh::cube_texture_coords));
+      
+      mesh.count = 36;
+      
+      Nil::Data::set(ground, mesh);
+    }
     
-    mesh.position_vec3 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_positions));
-    memcpy(mesh.position_vec3, Nil_ext::Mesh::cube_positions, sizeof(Nil_ext::Mesh::cube_positions));
-    
-    mesh.normal_vec3 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_normals));
-    memcpy(mesh.normal_vec3, Nil_ext::Mesh::cube_normals, sizeof(Nil_ext::Mesh::cube_normals));
-    
-    mesh.texture_coords_vec2 = (float*)malloc(sizeof(Nil_ext::Mesh::cube_texture_coords));
-    memcpy(mesh.texture_coords_vec2, Nil_ext::Mesh::cube_texture_coords, sizeof(Nil_ext::Mesh::cube_texture_coords));
-    
-    mesh.count = 36;
-    
-    Nil::Data::set(ground, mesh);
-    
-    Nil::Data::Transform trans{};
-    constexpr float zero[] = {0,0,0,0};
-    memcpy(trans.position, zero, sizeof(trans.position));
-    
-    constexpr float one[] = {1,1,1,1};
-    memcpy(trans.scale, one, sizeof(trans.scale));
-    
-    Nil::Data::set(ground, trans);
+    // Transform
+    {
+      Nil::Data::Transform trans{};
+      constexpr float zero[] = {0,0,0,0};
+      memcpy(trans.position, zero, sizeof(trans.position));
+      
+      constexpr float one[] = {1,1,1,1};
+      memcpy(trans.scale, one, sizeof(trans.scale));
+      
+      Nil::Data::set(ground, trans);
+    }
   }
   
   Nil::Node camera;
   {
     camera.set_name("Camera");
     
-    Nil::Data::Camera cam{};
-    cam.width = 1200;
-    cam.height = 720;
-    cam.fov = 0.4f;
-    cam.near_plane = 0.1f;
-    cam.far_plane = 100.f;
-    cam.type = Nil::Data::Camera::PERSPECTIVE;
-    cam.clear_color_buffer = true;
-    cam.clear_depth_buffer = true;
+    // Set Camera Data
+    {
+      Nil::Data::Camera cam{};
+      cam.width = 1200;
+      cam.height = 720;
+      cam.fov = 0.4f;
+      cam.near_plane = 0.1f;
+      cam.far_plane = 100.f;
+      cam.type = Nil::Data::Camera::PERSPECTIVE;
+      cam.clear_color_buffer = true;
+      cam.clear_depth_buffer = true;
+      Nil::Data::set(camera, cam);
+    }
     
-    Nil::Data::set(camera, cam);
+    // Set Transform Data
+    {
+      Nil::Data::Transform trans{};
+      trans.position[0] = +0.f;
+      trans.position[1] = +1.f;
+      trans.position[2] = -10.f;
+      Nil::Data::set(camera, trans);
+    }
   }
   
   
   while(nil_engine.run())
   {
-
   }
   
   
