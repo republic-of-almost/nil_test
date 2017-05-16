@@ -1,62 +1,59 @@
 #!lua
 
-engine_test_data = {
+--[[
+  Test Project Description
+]]--
 
-  name     = "NilTest",
-  kind     = "ConsoleApp",
-  language = "C++",
-  location = make.get_proj_root(),
+table.insert(
+  projects,
+  {
+    name     = "Test",
+    kind     = "WindowedApp",
+    language = "C++",
+    location = make.get_proj_root(),
 
-  src_files = {
-    make.get_proj_root() .. "src/**.hpp",
-    make.get_proj_root() .. "src/**.cpp",
-    make.get_proj_root() .. "src/**.mm",
-    make.get_proj_root() .. "src/**.h",
-    make.get_proj_root() .. "src/**.c",
-    make.get_proj_root() .. "src/**.m",
-    make.get_proj_root() .. "src/**.md",
+    src_files = {
+      -- Header
+      make.get_proj_root() .. "**.hpp",
+      make.get_proj_root() .. "**.h",
 
-    make.get_proj_root() .. "include/**.hpp",
-    make.get_proj_root() .. "include/**.cpp",
-    make.get_proj_root() .. "include/**.mm",
-    make.get_proj_root() .. "include/**.h",
-    make.get_proj_root() .. "include/**.c",
-    make.get_proj_root() .. "include/**.m",
-    make.get_proj_root() .. "include/**.md",
+      -- Source
+      make.get_proj_root() .. "**.cpp",
+      make.get_proj_root() .. "**.mm",
+      make.get_proj_root() .. "**.c",
+      make.get_proj_root() .. "**.m",
 
-    make.get_proj_root() .. "../nil_aspects/**.hpp",
-    make.get_proj_root() .. "../nil_aspects/**.cpp",
-    make.get_proj_root() .. "../nil_aspects/**.mm",
-    make.get_proj_root() .. "../nil_aspects/**.h",
-    make.get_proj_root() .. "../nil_aspects/**.c",
-    make.get_proj_root() .. "../nil_aspects/**.m",
-    make.get_proj_root() .. "../nil_aspects/**.md",
-  },
+      -- Doc
+      make.get_proj_root() .. "**.md",
+      make.get_proj_root() .. "**.txt",
+    },
 
-  asset_dir = "assets/",
+    -- asset_dir = "assets/",
 
-  lib_dirs_macosx = {
-    "/usr/local/lib/",
-  },
+    lib_dirs_macosx = {
+      "/usr/local/lib/",
+    },
 
-  linkoptions_macosx = {
-  },
+    linkoptions_macosx = {
+    },
 
-  inc_dirs_macosx = {
-    "/usr/local/include",
-  },
+    inc_dirs_macosx = {
+      "/usr/local/include",
+    },
 
-  project_dependencies = { -- This should pick up the links
-    "Nil",
-  },
+    project_dependencies = {
+      "Nil",
+      "Utilities",
+      "External",
+      "ROV",
+      "Math",
+      "Aspects",
+    },
 
-  inc_dirs = {
-    make.get_proj_root() .. "include/",
-    make.get_proj_root() .. "src/",
-    make.get_proj_root() .. "src/external/",
-    make.get_proj_root() .. "src/external/math/",
-    make.get_proj_root() .. "src/external/utilities/",
-    make.get_proj_root() .. "../nil_aspects/",
-    make.get_proj_root() .. "../nil_aspects/external/",
-  },
-}
+    inc_dirs = {
+      make.get_proj_root() .. "include/",
+      make.get_proj_root() .. "src/",
+      make.get_proj_root() .. "../nil_aspects/",
+    },
+  }
+)
